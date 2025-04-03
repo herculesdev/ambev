@@ -1,0 +1,70 @@
+# Build files
+bin/
+obj/
+
+# User-specific files
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Rider IDE
+*.sln.iml
+.idea/
+*.idea/
+
+# Visual Studio Code
+.vscode/
+
+# ASP.NET temp files
+.nuget/
+
+# Package directories
+**/node_modules/
+**/packages/
+
+# Logs
+logs/
+*.log
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.production
+
+# Database and generated files
+*.mdf
+*.ldf
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# Publish output
+publish/
+
+# Local application data
+App_Data/
+
+# Coverage & testing
+coverage/
+TestResults/
+*.coverage
+
+# Docker
+**/[Dd]ockerfile
+**/[Dd]ocker-compose.*
+
+# Terraform
+.terraform/
+*.tfstate
+
+# Secrets
+secrets.json
+
+# Resharper
+_ReSharper*/
+*.DotSettings.user
