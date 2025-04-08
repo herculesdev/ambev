@@ -18,6 +18,9 @@ obj/
 # Visual Studio Code
 .vscode/
 
+# Visual Studio
+.vs
+
 # ASP.NET temp files
 .nuget/
 
