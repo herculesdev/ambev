@@ -46,7 +46,17 @@ public class Sale : BaseEntity
             Total += i.Total;
         });
     }
-    
+
+    public void Update(Guid customerId, string customerName, Guid branchId, string branchName, int number, DateTime date)
+    {
+        CustomerId = customerId;
+        CustomerName = customerName;
+        BranchId = branchId;
+        BranchName = branchName;
+        Number = number;
+        Date = date;
+    }
+
     private void ResetTotals()
     {
         Discount = 0;

@@ -1,6 +1,6 @@
-﻿namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales.CreateSale;
+﻿namespace Ambev.DeveloperEvaluation.Application.Sales.UpdateSale;
 
-public class CreateSaleResponse
+public class UpdateSaleResult
 {
     public Guid Id { get; set; }
     public Guid CustomerId { get; set; }
@@ -13,5 +13,5 @@ public class CreateSaleResponse
     public decimal Subtotal { get; set; }
     public decimal Total { get; set; }
     public bool IsCancelled { get; set; }
-    public IEnumerable<CreateSaleItemResponse> Items { get; set; } = Array.Empty<CreateSaleItemResponse>();
+    public IEnumerable<UpdateSaleItemResult> Items { get; set; } = Array.Empty<UpdateSaleItemResult>();
 }

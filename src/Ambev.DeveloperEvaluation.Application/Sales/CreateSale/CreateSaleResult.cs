@@ -12,5 +12,6 @@ public class CreateSaleResult
     public decimal Discount { get; set; }
     public decimal Subtotal { get; set; }
     public decimal Total { get; set; }
+    public bool IsCancelled { get; set; }
     public IEnumerable<CreateSaleItemResult> Items { get; set; } = Array.Empty<CreateSaleItemResult>();
 }
