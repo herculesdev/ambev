@@ -1,6 +1,8 @@
-﻿using Ambev.DeveloperEvaluation.Domain.Entities;
+﻿using Ambev.DeveloperEvaluation.Domain.Common;
+using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System.Threading;
 
 namespace Ambev.DeveloperEvaluation.ORM.Repositories;
 public class SaleRepository : ISaleRepository
@@ -42,5 +44,13 @@ public class SaleRepository : ISaleRepository
         _context.Sales.Remove(sale);
         await _context.SaveChangesAsync(cancellationToken);
         return true;
+    }
+
+    public async Task<Paged<Sale>> GetPagedAsync(int page, int pageSize, CancellationToken cancellationToken = default)
+    {
+        var total = await _context.Sales.CountAsync(cancellationToken);
+        var skip = (page - 1) * pageSize;
+        var data = await _context.Sales.Skip(skip).Take(pageSize).ToListAsync(); ;
+        return new Paged<Sale>(data, page, pageSize, total);
     }
 }

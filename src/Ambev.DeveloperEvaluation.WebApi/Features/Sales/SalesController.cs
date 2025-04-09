@@ -1,13 +1,18 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Sales.CancelSale;
-using Ambev.DeveloperEvaluation.Application.Sales.CancelSaleItem;
 using Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
 using Ambev.DeveloperEvaluation.Application.Sales.DeleteSale;
+using Ambev.DeveloperEvaluation.Application.Sales.GetPagedSale;
 using Ambev.DeveloperEvaluation.Application.Sales.GetSale;
+using Ambev.DeveloperEvaluation.Application.Sales.Items.AddSaleItem;
+using Ambev.DeveloperEvaluation.Application.Sales.Items.CancelSaleItem;
 using Ambev.DeveloperEvaluation.Application.Sales.UpdateSale;
+using Ambev.DeveloperEvaluation.Domain.Common;
 using Ambev.DeveloperEvaluation.WebApi.Common;
+using Ambev.DeveloperEvaluation.WebApi.Features.Sales.AddSaleItem;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.CancelSale;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.CreateSale;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.DeleteSale;
+using Ambev.DeveloperEvaluation.WebApi.Features.Sales.GetPagedSale;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.GetSale;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.Items.CancelSaleItem;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.UpdateSale;
@@ -134,14 +139,36 @@ public class SalesController : BaseController
         if (!validationResult.IsValid)
             return BadRequest(validationResult.Errors);
 
-        var command = _mapper.Map<GetSaleQuery>(request.Id);
-        var response = await _mediator.Send(command, cancellationToken);
+        var query = _mapper.Map<GetSaleQuery>(request.Id);
+        var response = await _mediator.Send(query, cancellationToken);
 
         return Ok(new ApiResponseWithData<GetSaleResponse>
         {
             Success = true,
             Message = "Sale retrieved successfully",
             Data = _mapper.Map<GetSaleResponse>(response)
+        });
+    }
+
+    [HttpGet("Paged")]
+    [ProducesResponseType(typeof(ApiResponseWithData<Paged<GetPagedSaleResponse>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetPagedSale([FromQuery] GetPagedSaleRequest request, CancellationToken cancellationToken)
+    {
+        var validator = new GetPagedSaleRequestValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+        if (!validationResult.IsValid)
+            return BadRequest(validationResult.Errors);
+
+        var query = _mapper.Map<GetPagedSaleQuery>(request);
+        var response = await _mediator.Send(query, cancellationToken);
+
+        return Ok(new ApiResponseWithData<Paged<GetPagedSaleResponse>>
+        {
+            Success = true,
+            Message = "Paged Sales retrieved successfully",
+            Data = _mapper.Map<Paged<GetPagedSaleResponse>>(response)
         });
     }
 
@@ -165,6 +192,30 @@ public class SalesController : BaseController
         {
             Success = true,
             Message = "Sale Item cancelled successfully"
+        });
+    }
+
+    [HttpPost("{saleId}/Items")]
+    [ProducesResponseType(typeof(ApiResponseWithData<AddSaleItemResponse>), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> AddSaleItem([FromRoute] Guid saleId, [FromBody] AddSaleItemRequest request, CancellationToken cancellationToken)
+    {
+        request.SaleId = saleId;
+        var validator = new AddSaleItemRequestValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+        if (!validationResult.IsValid)
+            return BadRequest(validationResult.Errors);
+
+        var command = _mapper.Map<AddSaleItemCommand>(request);
+        var response = await _mediator.Send(command, cancellationToken);
+
+
+        return Created(string.Empty, new ApiResponseWithData<AddSaleItemResponse>
+        {
+            Success = true,
+            Message = "Sale Item added successfully",
+            Data = _mapper.Map<AddSaleItemResponse>(response)
         });
     }
 }

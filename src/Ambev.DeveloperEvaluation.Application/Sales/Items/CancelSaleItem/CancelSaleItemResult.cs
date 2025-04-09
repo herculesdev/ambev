@@ -1,4 +1,4 @@
-namespace Ambev.DeveloperEvaluation.Application.Sales.CancelSaleItem;
+namespace Ambev.DeveloperEvaluation.Application.Sales.Items.CancelSaleItem;
 
 public class CancelSaleItemResult
 {

@@ -4,7 +4,7 @@ using Ambev.DeveloperEvaluation.Domain.Repositories;
 using FluentValidation;
 using MediatR;
 
-namespace Ambev.DeveloperEvaluation.Application.Sales.CancelSaleItem;
+namespace Ambev.DeveloperEvaluation.Application.Sales.Items.CancelSaleItem;
 
 public class CancelSaleItemCommandHandler : IRequestHandler<CancelSaleItemCommand, CancelSaleItemResult>
 {
