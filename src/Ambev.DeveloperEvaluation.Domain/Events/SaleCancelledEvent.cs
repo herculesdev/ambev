@@ -2,11 +2,11 @@
 
 namespace Ambev.DeveloperEvaluation.Domain.Events;
 
-public class SaleCancelledEvent
+public class SaleCreatedEvent
 {
     public Sale Sale { get; }
 
-    public SaleCancelledEvent(Sale sale)
+    public SaleCreatedEvent(Sale sale)
     {
         Sale = sale;
     }

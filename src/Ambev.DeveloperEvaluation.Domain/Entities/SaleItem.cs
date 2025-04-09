@@ -14,9 +14,15 @@ public class SaleItem : BaseEntity
     public decimal TotalDiscount => Quantity * UnitDiscount;
     public decimal Subtotal => Quantity * UnitPrice;
     public decimal Total => Subtotal - TotalDiscount;
+    public bool IsCancelled { get; set; }
 
     internal void ApplyDiscount(decimal discountRate)
     {
         UnitDiscount = discountRate * UnitPrice;
+    }
+
+    public void Cancel()
+    {
+        IsCancelled = true;
     }
 }

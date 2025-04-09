@@ -36,6 +36,26 @@ public class Sale : BaseEntity
             AddItem(item);
     }
 
+    public void Cancel()
+    {
+        IsCancelled = true;
+        Items.ForEach(i => i.Cancel());
+    }
+
+    public SaleItem CancelItem(Guid id)
+    {
+        var item = Items.FirstOrDefault(i => i.Id == id);
+        if (item is null)
+            return null;
+
+        item.Cancel();
+        Discount -= item.TotalDiscount;
+        Subtotal -= item.Subtotal;
+        Total -= item.Total;
+
+        return item;
+    }
+
     public void RecalculateTotals()
     {
         ResetTotals();
