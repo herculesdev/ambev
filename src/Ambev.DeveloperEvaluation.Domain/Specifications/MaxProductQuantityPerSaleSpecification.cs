@@ -2,7 +2,7 @@
 
 namespace Ambev.DeveloperEvaluation.Domain.Specifications;
 
-class MaxProductQuantityPerSaleSpecification : ISpecification<Sale>
+public class MaxProductQuantityPerSaleSpecification : ISpecification<Sale>
 {
     private readonly Guid _productId;
     private readonly int _additionalQuantity;

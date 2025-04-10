@@ -9,6 +9,11 @@ public class Paged<T>
     public int PageCount => (int)Math.Ceiling((double)TotalItemCount / PerPage);
     public IEnumerable<T> Items { get; set; }
 
+    public Paged()
+    {
+        Items = Array.Empty<T>();
+    }
+
     public Paged(IEnumerable<T> items, int page, int perPage, int totalItemCount)
     {
         Page = page;

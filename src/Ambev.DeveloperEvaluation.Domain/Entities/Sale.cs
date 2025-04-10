@@ -61,9 +61,12 @@ public class Sale : BaseEntity
         ResetTotals();
         Items.ForEach(i =>
         {
-            Discount += i.TotalDiscount;
-            Subtotal += i.Subtotal;
-            Total += i.Total;
+            if (!i.IsCancelled)
+            {
+                Discount += i.TotalDiscount;
+                Subtotal += i.Subtotal;
+                Total += i.Total;
+            }
         });
     }
 
